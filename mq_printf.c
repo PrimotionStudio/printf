@@ -57,11 +57,11 @@ int print_formatted_string(const char *format, va_list mq)
 			}
 			else if (*format == 'd')
 			{
-				print_decimal(va_arg(mq, int));
+				mq_count += print_decimal(va_arg(mq, int));
 			}
 			else if (*format == 'i')
 			{
-				print_decimal(va_arg(mq, int));
+				mq_count += print_decimal(va_arg(mq, int));
 			}
 		}
 		format++;
