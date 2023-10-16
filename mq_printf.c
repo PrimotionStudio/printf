@@ -42,11 +42,6 @@ int print_formatted_string(const char *format, va_list mq)
 			format++;
 			if (*format == '\0')
 				break;
-			if (*format == '%')
-			{
-				write(1, format, 1);
-				mq_count++;
-			}
 			else if (*format == 'c')
 			{
 				mq_count += print_char(va_arg(mq, int));
@@ -55,6 +50,12 @@ int print_formatted_string(const char *format, va_list mq)
 			{
 				mq_count += print_string(va_arg(mq, char*));
 			}
+			else if (*format == '%')
+			{
+				write(1, format, 1);
+				mq_count++;
+			}
+
 		}
 		format++;
 	}
