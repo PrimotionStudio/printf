@@ -1,3 +1,4 @@
+
 #include "main.h"
 
 /**
@@ -12,7 +13,7 @@ void rec_print_int(int integer)
 
 	digit = integer % 10;
 	rec_print_int(integer / 10);
-	putchar(digit + '0');
+	_mqputchar(digit + '0');
 	return;
 }
 
@@ -24,14 +25,14 @@ void print_decimal(int decimal)
 {
 	if (decimal < 0)
 	{
-		putchar('-');
+		_mqputchar('-');
 		print_decimal(-decimal);
 	}
 	else
 	{
 		if (decimal == 0)
 		{
-			putchar('0');
+			_mqputchar('0');
 			return;
 		}
 		else
