@@ -11,6 +11,6 @@ int print_char(char m);
 int print_string(char *string);
 int print_formatted_string(const char *format, va_list mq);
 int _printf(const char *format, ...);
-void print_decimal(int decimal);
+int print_decimal(int decimal);
 
 #endif
