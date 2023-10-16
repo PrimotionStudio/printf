@@ -8,13 +8,13 @@
 void rec_print_int(int integer)
 {
 	int digit;
+
 	if (integer == 0)
 		return;
 
 	digit = integer % 10;
 	rec_print_int(integer / 10);
 	_mqputchar(digit + '0');
-	return;
 }
 
 /**
