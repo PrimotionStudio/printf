@@ -61,3 +61,17 @@ int print_formatted_string(const char *format, va_list mq)
 
 	return (mq_count);
 }
+
+/**
+ * print_string - The function to print a string
+ * @string: The string to print
+ * Return: The number of characters printed (length of the string)
+ */
+int print_string(char *string)
+{
+	int string_len;
+
+	string_len = strlen(string);
+	write(1, string, string_len);
+	return (string_len);
+}
