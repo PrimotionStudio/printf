@@ -55,7 +55,14 @@ int print_formatted_string(const char *format, va_list mq)
 				write(1, format, 1);
 				mq_count++;
 			}
-
+			else if (*format == 'd')
+			{
+				print_decimal(va_arg(mq, int));
+			}
+			else if (*format == 'i')
+			{
+				print_decimal(va_arg(mq, int));
+			}
 		}
 		format++;
 	}
