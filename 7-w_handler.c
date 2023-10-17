@@ -99,8 +99,8 @@ int mq_write_num(int inx, char mq_buf[], int mq_flags, int mq_prec,
 	if (mq_wid > mq_len)
 	{
 		for (m = 1; m < mq_wid - mq_len + 1; m++)
-			mq_buf[i] = mq_padd;
-		mq_buf[i] = '\0';
+			mq_buf[inx] = mq_padd;
+		mq_buf[inx] = '\0';
 		if (mq_flags & MINUS_FL && mq_padd == ' ')
 		{
 			if (mq_extra_c)
