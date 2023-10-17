@@ -11,23 +11,22 @@ int mq_get_flags(const char *format, int *mq_par)
 
 	int mq_flags = 0;
 
-	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
-	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
+	const char CHAR_F[] = {'-', '+', '0', '#', ' ', '\0'};
+	const int ARR_FL[] = {MINUS_FL, PLUS_FL, ZERO_FL, HASH_FL, SPACE_FL, 0};
 
 	for (mq_curr = *mq_par + 1; format[mq_curr] != '\0'; mq_curr++)
 	{
-		for (m = 0; FLAGS_CH[m] != '\0'; m++)
-			if (format[mq_curr] == FLAGS_CH[m])
+		for (m = 0; CHAR_F[m] != '\0'; m++)
+			if (format[mq_curr] == CHAR_F[m])
 			{
-				mq_flags |= FLAGS_ARR[m];
+				mq_flags |= ARR_F[m];
 
 				break;
 			}
-		if (FLAGS_CH[m] == 0)
+		if (CHAR_F[m] == 0)
 			break;
 	}
 	*mq_par = mq_curr - 1;
 
 	return (mq_flags);
-}
-
+i}

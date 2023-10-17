@@ -5,14 +5,14 @@
 #include <unistd.h>
 #include <stdarg.h>
 
-#define UNUSED(x) (void)(x)
 #define BUFF_SIZE 1024
+#define UNUSED(x) (void)(x)
 
-#define F_MINUS 1
-#define F_PLUS 2
-#define F_ZERO 4
-#define F_HASH 8
-#define F_SPACE 16
+#define MINUS_FL 1
+#define PLUS_FL 2
+#define ZERO_FL 4
+#define HASH_FL 8
+#define SPACE_FL 16
 
 #define S_LONG 2
 #define S_SHORT 1

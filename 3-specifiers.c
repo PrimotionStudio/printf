@@ -69,7 +69,7 @@ int mq_print_octal(va_list mq_types, char mq_buf[],
 		mq_numb /= 8;
 	}
 
-	if (mq_flag & F_HASH && unint_numb != 0)
+	if (mq_flag & HASH_FL && unint_numb != 0)
 		mq_buf[index--] = '0';
 
 	index++;
@@ -149,7 +149,7 @@ int mq_print_hexa(va_list mq_types, char mq_map_to[], char mq_buf[],
 		mq_numb /= 16;
 	}
 
-	if (mq_flag & F_HASH && unint_numb != 0)
+	if (mq_flag & HASH_FL && unint_numb != 0)
 	{
 		mq_buf[index--] = mq_flag_ch;
 		mq_buf[index--] = '0';
