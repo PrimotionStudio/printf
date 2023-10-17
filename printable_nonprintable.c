@@ -81,7 +81,7 @@ int mq_print_non_printable(va_list mq_types, char mq_buffer[],
 		else
 			offset += mq_append_hexa_code(mq_string[m], mq_buffer, m + offset);
 
-		i++;
+		m++;
 	}
 
 	mq_buffer[m + offset] = '\0';
