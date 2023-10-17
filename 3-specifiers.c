@@ -136,7 +136,7 @@ int mq_print_hexa(va_list mq_types, char mq_map_to[], char mq_buf[],
 
 	UNUSED(mq_width);
 
-	numb = mq_convert_size_unsign(mq_numb, mq_size);
+	mq_numb = mq_convert_size_unsign(mq_numb, mq_size);
 
 	if (mq_numb == 0)
 		mq_buf[index--] = '0';
