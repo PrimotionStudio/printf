@@ -36,9 +36,7 @@ int _printf(const char *format, ...)
 		{
 			mq_buffer[mq_buff_ind++] = format[mq_i];
 			if (mq_buff_ind == BUFF_SIZE)
-			{
 				mq_print_buffer(mq_buffer, &mq_buff_ind);
-			}
 			mq_printed_chars++;
 		}
 		else
@@ -52,9 +50,7 @@ int _printf(const char *format, ...)
 			mq_printed = mq_handle_print(format, &mq_i, mq_list, mq_buffer,
 					mq_flags, mq_width, mq_precision, mq_size);
 			if (mq_printed == -1)
-			{
 				return (-1);
-			}
 			mq_printed_chars += mq_printed;
 		}
 	}
