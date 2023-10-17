@@ -74,12 +74,12 @@ int mq_print_non_printable(va_list mq_types, char mq_buffer[],
 	if (mq_string == NULL)
 		return (write(1, "(null)", 6));
 
-	while (mq_string[i] != '\0')
+	while (mq_string[m] != '\0')
 	{
 		if (mq_is_printable(mq_string[m]))
 			mq_buffer[m + offset] = mq_string[m];
 		else
-			offset += append_hexa_code(mq_string[m], mq_buffer, m + offset);
+			offset += mq_append_hexa_code(mq_string[m], mq_buffer, m + offset);
 
 		i++;
 	}
@@ -178,4 +178,5 @@ int mq_print_rot13string(va_list mq_types, char mq_buffer[],
 			mq_count++;
 		}
 	}
+	return (mq_count);
 }
