@@ -84,7 +84,7 @@ int mq_write_number(int mq_is_negative, int index, char mq_buffer[],
 int mq_write_num(int inx, char mq_buf[], int mq_flags, int mq_prec,
 		int mq_wid, int mq_len, char mq_padd, char mq_extra_c)
 {
-	int i, padd_start = 1;
+	int m, padd_start = 1;
 
 	if (mq_prec == 0 && inx == BUFF_SIZE - 2 && mq_buf[inx] == '0' && mq_wid == 0)
 		return (0);
@@ -98,26 +98,26 @@ int mq_write_num(int inx, char mq_buf[], int mq_flags, int mq_prec,
 		mq_len++;
 	if (mq_wid > mq_len)
 	{
-		for (i = 1; i < mq_wid - mq_len + 1; i++)
+		for (m = 1; m < mq_wid - mq_len + 1; m++)
 			mq_buf[i] = mq_padd;
 		mq_buf[i] = '\0';
 		if (mq_flags & F_MINUS && mq_padd == ' ')
 		{
 			if (mq_extra_c)
 				mq_buf[--inx] = mq_extra_c;
-			return (write(1, &mq_buf[inx], mq_len) + write(1, &mq_buf[1], i - 1));
+			return (write(1, &mq_buf[inx], mq_len) + write(1, &mq_buf[1], m - 1));
 		}
 		else if (!(mq_flags & F_MINUS) && mq_padd == ' ')
 		{
 			if (mq_extra_c)
 				mq_buf[--inx] = mq_extra_c;
-			return (write(1, &mq_buf[1], i - 1) + write(1, &mq_buf[inx], mq_len));
+			return (write(1, &mq_buf[1], m - 1) + write(1, &mq_buf[inx], mq_len));
 		}
 		else if (!(mq_flags & F_MINUS) && mq_padd == '0')
 		{
 			if (mq_extra_c)
 				mq_buf[--padd_start] = mq_extra_c;
-			return (write(1, &mq_buf[padd_start], i - padd_start) +
+			return (write(1, &mq_buf[padd_start], m - padd_start) +
 					write(1, &mq_buf[inx], mq_len - (1 - padd_start)));
 		}
 	}
