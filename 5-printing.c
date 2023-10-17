@@ -1,7 +1,7 @@
 #include "main.h"
 /**
  * mq_handle_print - Function to print the type of an argument
- * @fmt: The formatted string to be printed
+ * @mq_fmt: The formatted string to be printed
  * @mq_ind: The index
  * @mq_list: The arguments
  * @mq_buffer: The buffer
