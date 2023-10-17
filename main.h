@@ -35,7 +35,7 @@ struct fmt
  */
 typedef struct fmt fmt_t;
 
-int mq_printf(const char*, ...);
+int _printf(const char*, ...);
 int mq_handle_print(const char*, int*, va_list, char[], int, int, int, int);
 
 int mq_print_char(va_list, char[], int, int, int, int);
