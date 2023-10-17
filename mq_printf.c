@@ -58,7 +58,7 @@ int _printf(const char *format, ...)
 			mq_print_chars += mq_print;
 		}
 	}
-	mq_print_buffer(mq_buffer, &mq_buf_ind);
+	mq_print_buffer(mq_buf, &mq_buf_ind);
 	va_end(mq_list);
 	return (mq_print_chars);
 }
