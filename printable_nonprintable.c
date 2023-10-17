@@ -1,17 +1,18 @@
 #include "main.h"
 
 /**
- * mq_print_pointer - prints a pointer's value
- * @mq_types: varadic arguments
- * @mq_buffer: buffer to print
- * @mq_flags: Formatting flags
- * @mq_width: minimum length
- * @mq_precision: precision
- * @mq_size: buffer size
- * Return: no of printed characters
+ * mq_print_pointer - Function to print a pointer's value
+ * @mq_types: The variadic arguments
+ * @mq_buf: The buffer to print from
+ * @mq_flag: Formatting flags
+ * @mq_width: The minimum length
+ * @mq_prec: To set precision
+ * @mq_size: The buffer size
+ *
+ * Return: The number of printed characters
  */
-int mq_print_pointer(va_list mq_types, char mq_buffer[],
-		int mq_flags, int mq_width, int mq_precision, int mq_size)
+int mq_print_pointer(va_list mq_types, char mq_buf[],
+		int mq_flag, int mq_width, int mq_prec, int mq_size)
 {
 	char ext = 0, mq_padd = ' ';
 	int index = BUFF_SIZE - 2, len = 2, pad_start = 1;
@@ -25,29 +26,29 @@ int mq_print_pointer(va_list mq_types, char mq_buffer[],
 	if (mq_addrs == NULL)
 		return (write(1, "(nil)", 5));
 
-	mq_buffer[BUFF_SIZE - 1] = '\0';
-	UNUSED(mq_precision);
+	mq_buf[BUFF_SIZE - 1] = '\0';
+	UNUSED(mq_prec);
 
 	mq_num_addrs = (unsigned long)mq_addrs;
 
 	while (mq_num_addrs > 0)
 	{
-		mq_buffer[index--] = mq_map_to[mq_num_addrs % 16];
+		mq_buf[index--] = mq_map_to[mq_num_addrs % 16];
 		mq_num_addrs /= 16;
 		len++;
 	}
 
-	if ((mq_flags & F_ZERO) && !(mq_flags & F_MINUS))
+	if ((mq_flag & F_ZERO) && !(mq_flag & F_MINUS))
 		mq_padd = '0';
-	if (mq_flags & F_PLUS)
+	if (mq_flag & F_PLUS)
 		ext = '+', len++;
-	else if (mq_flags & F_SPACE)
+	else if (mq_flag & F_SPACE)
 		ext = ' ', len++;
 
 	index++;
 
-	return (mq_write_pointer(mq_buffer, index, len, mq_width,
-				mq_flags, mq_padd, ext, pad_start));
+	return (mq_write_pointer(mq_buf, index, len, mq_width,
+				mq_flag, mq_padd, ext, pad_start));
 }
 
 /**

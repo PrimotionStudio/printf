@@ -34,10 +34,13 @@ int _printf(const char *format, ...)
 	{
 		if (format[mq_i] != '%')
 		{
-			mq_buffer[mq_buff_ind++] = format[mq_i];
-			if (mq_buff_ind == BUFF_SIZE)
-				mq_print_buffer(mq_buffer, &mq_buff_ind);
-			mq_printed_chars++;
+			mq_buf[mq_buf_ind++] = format[mq_i];
+			if (mq_buf_ind == BUFF_SIZE)
+			{
+
+				mq_print_buffer(mq_buf, &mq_buf_ind);
+			}
+			mq_print_chars++;
 		}
 		else
 		{
@@ -47,11 +50,13 @@ int _printf(const char *format, ...)
 			mq_prec = mq_get_precision(format, &mq_i, mq_list);
 			mq_size = mq_get_size(format, &mq_i);
 			++mq_i;
-			mq_printed = mq_handle_print(format, &mq_i, mq_list, mq_buffer,
-					mq_flags, mq_width, mq_precision, mq_size);
-			if (mq_printed == -1)
+			mq_print = mq_handle_print(format, &mq_i, mq_list, mq_buf,
+					mq_flag, mq_width, mq_prec, mq_size);
+			if (mq_print == -1)
+			{
 				return (-1);
-			mq_printed_chars += mq_printed;
+			}
+			mq_print_chars += mq_print;
 		}
 	}
 	mq_print_buffer(mq_buf, &mq_buf_ind);
