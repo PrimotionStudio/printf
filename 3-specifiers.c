@@ -1,17 +1,18 @@
 #include "main.h"
 
 /**
- * mq_print_unsign - Print unsigned
- * @mq_types: Varadic arguments
- * @mq_buffer: Buffer to print
- * @mq_flags: Formatting flags
+ * mq_print_unsign - Function to print unsigned
+ * @mq_types: The variadic arguments
+ * @mq_buf: The buffer to print from
+ * @mq_flag: Formatting flags
  * @mq_width: minimum characters to be printed
- * @mq_precision: precision
+ * @mq_prec: precision
  * @mq_size: Size of buffer
+ *
  * Return: no of characters
  */
-int mq_print_unsign(va_list mq_types,
-		char mq_buffer[], int mq_flags, int mq_width, int mq_precision, int mq_size)
+int mq_print_unsign(va_list mq_types, char mq_buf[],
+		int mq_flag, int mq_width, int mq_prec, int mq_size)
 {
 	int index = BUFF_SIZE - 2;
 	unsigned long int numb = va_arg(mq_types, unsigned long int);
@@ -19,139 +20,143 @@ int mq_print_unsign(va_list mq_types,
 	numb = mq_convert_size_unsign(numb, mq_size);
 
 	if (numb == 0)
-		mq_buffer[index--] = '0';
+		mq_buf[index--] = '0';
 
-	mq_buffer[BUFF_SIZE - 1] = '\0';
+	mq_buf[BUFF_SIZE - 1] = '\0';
 
 	while (numb > 0)
 	{
-		mq_buffer[index--] = (numb % 10) + '0';
+		mq_buf[index--] = (numb % 10) + '0';
 		numb /= 10;
 	}
 
 	index++;
 
 	return (mq_write_unsign(0, index,
-				mq_buffer, mq_flags, mq_width, mq_precision, mq_size));
+				mq_buf, mq_flag, mq_width, mq_prec, mq_size));
 }
 
 /**
- * mq_print_octal - Print octal number
- * @mq_types: variadic arg
- * @mq_buffer: Buffer to print
- * @mq_flags: Formatting flag
- * @mq_width: minimum characters to be printed
- * @mq_precision: Preciscion
+ * mq_print_octal - Function to print octal number
+ * @mq_types: The variadic arguments
+ * @mq_buf: The buffer to print from
+ * @mq_flag: Formatting flag
+ * @mq_width: The minimum characters to be printed
+ * @mq_prec: To set preciscion
  * @mq_size: Size of buffer
- * Return: no of characters
+ *
+ * Return: The number of characters
  */
-int mq_print_octal(va_list mq_types, char mq_buffer[],
-		int mq_flags, int mq_width, int mq_precision, int mq_size)
+int mq_print_octal(va_list mq_types, char mq_buf[],
+		int mq_flag, int mq_width, int mq_prec, int mq_size)
 {
 	int index = BUFF_SIZE - 2;
-	unsigned long int numb = va_arg(mq_types, unsigned long int);
-	unsigned long int init_numb = numb;
+	unsigned long int mq_numb = va_arg(mq_types, unsigned long int);
+	unsigned long int unint_numb = mq_numb;
 
 	UNUSED(mq_width);
 
-	numb = mq_convert_size_unsign(numb, mq_size);
+	mq_numb = mq_convert_size_unsign(mq_numb, mq_size);
 
-	if (numb == 0)
-		mq_buffer[index--] = '0';
+	if (mq_numb == 0)
+		mq_buf[index--] = '0';
 
-	mq_buffer[BUFF_SIZE - 1] = '\0';
+	mq_buf[BUFF_SIZE - 1] = '\0';
 
-	while (numb > 0)
+	while (mq_numb > 0)
 	{
-		mq_buffer[index--] = (numb % 8) + '0';
-		numb /= 8;
+		mq_buf[index--] = (mq_numb % 8) + '0';
+		mq_numb /= 8;
 	}
 
-	if (mq_flags & F_HASH && init_numb != 0)
-		mq_buffer[index--] = '0';
+	if (mq_flag & F_HASH && unint_numb != 0)
+		mq_buf[index--] = '0';
+
+	index++;
+
+	return (mq_write_unsign(0, index, mq_buf,
+				mq_flag, mq_width, mq_prec, mq_size));
+}
+
+/**
+ * mq_print_hexadecimal - Function to print hex in lowercase
+ * @mq_types: The variadic arguments
+ * @mq_buf: The buffer to print from
+ * @mq_flag: formatting flags
+ * @mq_width: The minimum length
+ * @mq_prec: To set precision
+ * @mq_size: The size of buffer
+ *
+ * Return: The number of printed characters
+ */
+int mq_print_hexadecimal(va_list mq_types, char mq_buf[],
+		int mq_flag, int mq_width, int mq_prec, int mq_size)
+{
+	return (mq_print_hexa(mq_types, "0123456789abcdef", mq_buf,
+				mq_flag, 'x', mq_width, mq_prec, mq_size));
+}
+
+/**
+ * mq_print_hexa_upper - Function to print hex in uppercase
+ * @mq_types: The variadic arguments
+ * @mq_buf: The buffer to print from
+ * @mq_flag: formatting flags
+ * @mq_width: The minimum length
+ * @mq_prec: To set precision
+ * @mq_size: The size of buffer
+ *
+ * Return: The number of printed characters
+ */
+int mq_print_hexa_upper(va_list mq_types, char mq_buf[],
+		int mq_flag, int mq_width, int mq_prec, int mq_size)
+{
+	return (mq_print_hexa(mq_types, "0123456789ABCDEF", mq_buf,
+				mq_flag, 'X', mq_width, mq_prec, mq_size));
+}
+
+/**
+ * mq_print_hexa - Function to print a hex in either lowercase or uppercase
+ * @mq_types: The varadic arguments
+ * @mq_map_to: The value array
+ * @mq_buf: The buffer to print from
+ * @mq_flag: The format flags (int)
+ * @mq_flag_ch: The format flags (char)
+ * @mq_width: The minimum length
+ * @mq_prec: To set precision
+ * @mq_size: The buffer size
+ *
+ * Return: The number of characters
+ */
+int mq_print_hexa(va_list mq_types, char mq_map_to[], char mq_buf[],
+		int mq_flag, char mq_flag_ch, int mq_width, int mq_prec, int mq_size)
+{
+	int index = BUFF_SIZE - 2;
+	unsigned long int mq_numb = va_arg(mq_types, unsigned long int);
+	unsigned long int unint_numb = mq_numb;
+
+	UNUSED(mq_width);
+
+	numb = mq_convert_size_unsign(mq_numb, mq_size);
+
+	if (mq_numb == 0)
+		mq_buf[index--] = '0';
+
+	mq_buf[BUFF_SIZE - 1] = '\0';
+
+	while (mq_numb > 0)
+	{
+		mq_buf[index--] = mq_map_to[mq_numb % 16];
+		mq_numb /= 16;
+	}
+
+	if (mq_flag & F_HASH && unint_numb != 0)
+	{
+		mq_buf[index--] = mq_flag_ch;
+		mq_buf[index--] = '0';
+	}
 
 	index++;
 
 	return (mq_write_unsign(0, index,
-				mq_buffer, mq_flags, mq_width, mq_precision, mq_size));
-}
-
-/**
- * mq_print_hexadecimal - print hex in lowercase
- * @mq_types: varadic arguments
- * @mq_buffer: buffer to print
- * @mq_flags: formatting flags
- * @mq_width: minimum length
- * @mq_precision: precision
- * @mq_size: size of buffer
- * Return: no of characters printed
- */
-int mq_print_hexadecimal(va_list mq_types, char mq_buffer[],
-		int mq_flags, int mq_width, int mq_precision, int mq_size)
-{
-	return (mq_print_hexa(mq_types, "0123456789abcdef", mq_buffer,
-				mq_flags, 'x', mq_width, mq_precision, mq_size));
-}
-
-/**
- * mq_print_hexa_upper - Print hex in uppercase
- * @mq_types: varadic arguments
- * @mq_buffer: buffer to print
- * @mq_flags: formatting flags
- * @mq_width: minimum length
- * @mq_precision: precision
- * @mq_size: size of buffer
- * Return: no of characters printed
- */
-int mq_print_hexa_upper(va_list mq_types, char mq_buffer[],
-		int mq_flags, int mq_width, int mq_precision, int mq_size)
-{
-	return (mq_print_hexa(mq_types, "0123456789ABCDEF", mq_buffer,
-				mq_flags, 'X', mq_width, mq_precision, mq_size));
-}
-
-/**
- * mq_print_hexa - Prints a hex in either lower or upper.
- * @mq_types: varadic.
- * @map_to: value array.
- * @mq_buffer: buffer to print.
- * @mq_flags: format flags (int)
- * @flag_ch: format flags (char)
- * @mq_width: minimum length
- * @mq_precision: precision
- * @mq_size: buffer size
- * Return: no of characters
- */
-int mq_print_hexa(va_list mq_types, char map_to[], char mq_buffer[],
-		int mq_flags, char flag_ch, int mq_width, int mq_precision, int mq_size)
-{
-	int index = BUFF_SIZE - 2;
-	unsigned long int numb = va_arg(mq_types, unsigned long int);
-	unsigned long int init_numb = numb;
-
-	UNUSED(mq_width);
-
-	numb = mq_convert_size_unsign(numb, mq_size);
-
-	if (numb == 0)
-		mq_buffer[index--] = '0';
-
-	mq_buffer[BUFF_SIZE - 1] = '\0';
-
-	while (numb > 0)
-	{
-		mq_buffer[index--] = map_to[numb % 16];
-		numb /= 16;
-	}
-
-	if (mq_flags & F_HASH && init_numb != 0)
-	{
-		mq_buffer[index--] = flag_ch;
-		mq_buffer[index--] = '0';
-	}
-
-	index++;
-
-	return (mq_write_unsign(0, index,
-				mq_buffer, mq_flags, mq_width, mq_precision, mq_size));
+				mq_buf, mq_flag, mq_width, mq_prec, mq_size));
 }
