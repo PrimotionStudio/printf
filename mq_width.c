@@ -3,25 +3,25 @@
 /**
  * mq_get_width - gets the width to print
  * @mq_format: string to print the arguments
- * @mq_i: no of varadic arguments
+ * @m: no of varadic arguments
  * @mq_list: varadic arguments
  * Return: lenght to print.
  */
-int mq_get_width(const char *mq_format, int *mq_i, va_list mq_list)
+int mq_get_width(const char *mq_format, int *m, va_list mq_list)
 {
-	int curr_i;
+	int curent_point;
 	int mq_width = 0;
 
-	for (curr_i = *mq_i + 1; mq_format[curr_i] != '\0'; curr_i++)
+	for (curent_point = *m + 1; mq_format[curent_point] != '\0'; curent_point++)
 	{
-		if (mq_is_digit(mq_format[curr_i]))
+		if (mq_is_digit(mq_format[curent_point]))
 		{
 			mq_width *= 10;
-			mq_width += mq_format[curr_i] - '0';
+			mq_width += mq_format[curent_point] - '0';
 		}
-		else if (mq_format[curr_i] == '*')
+		else if (mq_format[curent_point] == '*')
 		{
-			curr_i++;
+			curent_point++;
 			mq_width = va_arg(mq_list, int);
 			break;
 		}
@@ -31,7 +31,7 @@ int mq_get_width(const char *mq_format, int *mq_i, va_list mq_list)
 		}
 	}
 
-	*mq_i = curr_i - 1;
+	*m = curent_point - 1;
 
 	return (mq_width);
 }

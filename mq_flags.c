@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * mq_get_flags - Function to calculate the active flags
  * @format: The formatted string to be printed
@@ -8,7 +9,6 @@
 int mq_get_flags(const char *format, int *mq_par)
 {
 	int m, mq_curr;
-
 	int mq_flags = 0;
 
 	const char CHAR_F[] = {'-', '+', '0', '#', ' ', '\0'};
@@ -29,4 +29,3 @@ int mq_get_flags(const char *format, int *mq_par)
 	*mq_par = mq_curr - 1;
 
 	return (mq_flags);
-i}

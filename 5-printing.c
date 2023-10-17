@@ -26,7 +26,7 @@ int mq_handle_print(const char *fmt, int *mq_ind,
 	};
 	for (iter = 0; fmt_types[iter].fmt != '\0'; iter++)
 	{
-		if (fmt[(*mq_ind)] == fmt_types[iter].fmt)
+		if (fmt[*mq_ind] == fmt_types[iter].fmt)
 		{
 			return (fmt_types[iter].fn(mq_list, mq_buffer,
 					mq_flags, mq_width, mq_precision, mq_size));
@@ -34,21 +34,21 @@ int mq_handle_print(const char *fmt, int *mq_ind,
 	}
 	if (fmt_types[iter].fmt == '\0')
 	{
-		if (fmt[(*mq_ind)] == '\0')
+		if (fmt[*mq_ind] == '\0')
 			return (-1);
-		mq_unknown_len += write(1, "%", 1);
-		if (fmt[(*mq_ind) - 1] == ' ')
+		mq_unknown_len += write(1, "%%", 1);
+		if (fmt[*mq_ind - 1] == ' ')
 			mq_unknown_len += write(1, " ", 1);
 		else if (mq_width)
 		{
-			(*mq_ind)--;
-			while (fmt[(*mq_ind)] != ' ' && fmt[(*mq_ind)] != '%')
-				(*mq_ind)--;
-			if (fmt[(*mq_ind)] == ' ')
-				(*mq_ind)--;
+			--(*mq_ind);
+			while (fmt[*mq_ind] != ' ' && fmt[*mq_ind] != '%')
+				--(*mq_ind);
+			if (fmt[*mq_ind] == ' ')
+				--(*mq_ind);
 			return (1);
 		}
-		mq_unknown_len += write(1, &fmt[(*mq_ind)], 1);
+		mq_unknown_len += write(1, &fmt[*mq_ind], 1);
 		return (mq_unknown_len);
 	}
 	return (printed_chars);

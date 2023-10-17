@@ -3,12 +3,12 @@
 /**
  * mq_get_size - gets the size of the argument
  * @mq_format: string to print arguments
- * @mq_i: no arguments
+ * @m: no arguments
  * Return: size of argument
  */
-int mq_get_size(const char *mq_format, int *mq_i)
+int mq_get_size(const char *mq_format, int *m)
 {
-	int curent_point = *mq_i + 1;
+	int curent_point = *m + 1;
 	int mq_size = 0;
 
 	if (mq_format[curent_point] == 'l')
@@ -22,11 +22,11 @@ int mq_get_size(const char *mq_format, int *mq_i)
 
 	if (mq_size == 0)
 	{
-		*mq_i = curent_point - 1;
+		*m = curent_point - 1;
 	}
 	else
 	{
-		*mq_i = curent_point;
+		*m = curent_point;
 	}
 
 	return (mq_size);
