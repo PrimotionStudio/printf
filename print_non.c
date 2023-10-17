@@ -88,7 +88,7 @@ int mq_print_non_printable(va_list mq_types, char mq_buf[],
 
 	mq_buf[m + offset] = '\0';
 
-	return (write(1, mq_buffer, m + offset));
+	return (write(1, mq_buf, m + offset));
 }
 
 /**
@@ -163,7 +163,7 @@ int mq_print_rot13string(va_list mq_types, char mq_buf[],
 
 	if (mq_string == NULL)
 		mq_string = "(AHYY)";
-	for (index = 0; mq_string[index]; i++)
+	for (index = 0; mq_string[index]; index++)
 	{
 		for (j = 0; mq_in[j]; j++)
 		{

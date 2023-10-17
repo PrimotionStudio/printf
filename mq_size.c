@@ -13,11 +13,11 @@ int mq_get_size(const char *mq_format, int *m)
 
 	if (mq_format[curent_point] == 'l')
 	{
-		mq_size = S_LONG;
+		mq_size = MQ_S_LONG;
 	}
 	else if (mq_format[curent_point] == 'h')
 	{
-		mq_size = S_SHORT;
+		mq_size = MQ_S_SHORT;
 	}
 
 	if (mq_size == 0)

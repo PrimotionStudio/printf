@@ -14,24 +14,24 @@
 #define HASH_FL 8
 #define SPACE_FL 16
 
-#define S_LONG 2
-#define S_SHORT 1
+#define MQ_S_LONG 2
+#define MQ_S_SHORT 1
 
 /**
- * struct fmt - format structure
- * @fmt: format
- * @fn: format function
+ * struct fmt - The format structure
+ * @mq_fmt: format
+ * @mq_fn: format function
  */
-struct fmt
+struct mq_fmt
 {
 	char mq_fmt;
 	int (*mq_fn)(va_list, char[], int, int, int, int);
 };
 
 /**
- * typedef struct fmt fmt_t - format structure
- * @fmt: format
- * @fn_t: format function
+ * typedef struct fmt fmt_t - The format structure
+ * @mq_fmt: format
+ * @mq_fn_t: format function
  */
 typedef struct mq_fmt mq_fmt_t;
 

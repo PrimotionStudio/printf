@@ -56,9 +56,9 @@ int mq_is_digit(char c)
  */
 long int mq_convert_size_number(long int numb, int size)
 {
-	if (size == S_LONG)
+	if (size == MQ_S_LONG)
 		return (numb);
-	else if (size == S_SHORT)
+	else if (size == MQ_S_SHORT)
 		return ((short)numb);
 	return ((int)numb);
 }
@@ -71,9 +71,9 @@ long int mq_convert_size_number(long int numb, int size)
  */
 long int mq_convert_size_unsign(unsigned long int numb, int size)
 {
-	if (size == S_LONG)
+	if (size == MQ_S_LONG)
 		return (numb);
-	else if (size == S_SHORT)
+	else if (size == MQ_S_SHORT)
 		return ((unsigned short)numb);
 	return ((unsigned int)numb);
 }

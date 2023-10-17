@@ -19,7 +19,7 @@ int mq_get_flags(const char *format, int *mq_par)
 		for (m = 0; CHAR_F[m] != '\0'; m++)
 			if (format[mq_curr] == CHAR_F[m])
 			{
-				mq_flags |= ARR_F[m];
+				mq_flags |= ARR_FL[m];
 
 				break;
 			}
@@ -29,3 +29,4 @@ int mq_get_flags(const char *format, int *mq_par)
 	*mq_par = mq_curr - 1;
 
 	return (mq_flags);
+}

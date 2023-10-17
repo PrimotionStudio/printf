@@ -56,7 +56,7 @@ int mq_print_string(va_list mq_types, char mq_buf[],
 
 	if (mq_width > mq_len)
 	{
-		if (mq_flag & F_MINUS)
+		if (mq_flag & MINUS_FL)
 		{
 			write(1, &string[0], mq_len);
 			for (index = mq_width - mq_len; index > 0; index--)

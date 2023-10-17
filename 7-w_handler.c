@@ -20,7 +20,7 @@ int mq_handle_write_char(char mq_c, char mq_buffer[],
 	UNUSED(mq_precision);
 	UNUSED(mq_size);
 
-	if (mq_flags & F_ZERO)
+	if (mq_flags & ZERO_FL)
 		mq_padd = '0';
 	mq_buffer[index++] = mq_c;
 	mq_buffer[index] = '\0';
@@ -29,7 +29,7 @@ int mq_handle_write_char(char mq_c, char mq_buffer[],
 		mq_buffer[BUFF_SIZE - 1] = '\0';
 		for (index = 0; index < mq_width - 1; index++)
 			mq_buffer[BUFF_SIZE - index - 2] = mq_padd;
-		if (mq_flags & F_MINUS)
+		if (mq_flags & MINUS_FL)
 			return (write(1, &mq_buffer[0], 1) +
 					write(1, &mq_buffer[BUFF_SIZE - index - 1], mq_width - 1));
 		else
@@ -57,13 +57,13 @@ int mq_write_number(int mq_is_negative, int index, char mq_buffer[],
 	char mq_padd = ' ', mq_extra_ch = 0;
 
 	UNUSED(mq_size);
-	if ((mq_flags & F_ZERO) && !(mq_flags & F_MINUS))
+	if ((mq_flags & ZERO_FL) && !(mq_flags & MINUS_FL))
 		mq_padd = '0';
 	if (mq_is_negative)
 		mq_extra_ch = '-';
-	else if (mq_flags & F_PLUS)
+	else if (mq_flags & PLUS_FL)
 		mq_extra_ch = '+';
-	else if (mq_flags & F_SPACE)
+	else if (mq_flags & SPACE_FL)
 		mq_extra_ch = ' ';
 	return (mq_write_num(index, mq_buffer, mq_flags, mq_width, mq_precision,
 				mq_length, mq_padd, mq_extra_ch));
@@ -101,19 +101,19 @@ int mq_write_num(int inx, char mq_buf[], int mq_flags, int mq_prec,
 		for (i = 1; i < mq_wid - mq_len + 1; i++)
 			mq_buf[i] = mq_padd;
 		mq_buf[i] = '\0';
-		if (mq_flags & F_MINUS && mq_padd == ' ')
+		if (mq_flags & MINUS_FL && mq_padd == ' ')
 		{
 			if (mq_extra_c)
 				mq_buf[--inx] = mq_extra_c;
 			return (write(1, &mq_buf[inx], mq_len) + write(1, &mq_buf[1], i - 1));
 		}
-		else if (!(mq_flags & F_MINUS) && mq_padd == ' ')
+		else if (!(mq_flags & MINUS_FL) && mq_padd == ' ')
 		{
 			if (mq_extra_c)
 				mq_buf[--inx] = mq_extra_c;
 			return (write(1, &mq_buf[1], i - 1) + write(1, &mq_buf[inx], mq_len));
 		}
-		else if (!(mq_flags & F_MINUS) && mq_padd == '0')
+		else if (!(mq_flags & MINUS_FL) && mq_padd == '0')
 		{
 			if (mq_extra_c)
 				mq_buf[--padd_start] = mq_extra_c;
@@ -155,14 +155,14 @@ int mq_write_unsign(int mq_is_negative, int index,
 		mq_buffer[--index] = '0';
 		mq_length++;
 	}
-	if (mq_flags & F_ZERO && !(mq_flags & F_MINUS))
+	if (mq_flags & ZERO_FL && !(mq_flags & MINUS_FL))
 		mq_padd = '0';
 	if (mq_width > mq_length)
 	{
 		for (i = 0; i < mq_width - mq_length; i++)
 			mq_buffer[i] = mq_padd;
 		mq_buffer[i] = '\0';
-		if (mq_flags & F_MINUS)
+		if (mq_flags & MINUS_FL)
 		{
 			return (write(1, &mq_buffer[index], mq_length) + write(1,
 						&mq_buffer[0], i));
@@ -198,7 +198,7 @@ int mq_write_pointer(char mq_buffer[], int index, int mq_length,
 		for (i = 3; i < mq_width - mq_length + 3; i++)
 			mq_buffer[i] = mq_padd;
 		mq_buffer[i] = '\0';
-		if (mq_flags & F_MINUS && mq_padd == ' ')
+		if (mq_flags & MINUS_FL && mq_padd == ' ')
 		{
 			mq_buffer[--index] = 'x';
 			mq_buffer[--index] = '0';
@@ -207,7 +207,7 @@ int mq_write_pointer(char mq_buffer[], int index, int mq_length,
 			return (write(1, &mq_buffer[index], mq_length) + write(1,
 						&mq_buffer[3], i - 3));
 		}
-		else if (!(mq_flags & F_MINUS) && mq_padd == ' ')
+		else if (!(mq_flags & MINUS_FL) && mq_padd == ' ')
 		{
 			mq_buffer[--index] = 'x';
 			mq_buffer[--index] = '0';
@@ -216,7 +216,7 @@ int mq_write_pointer(char mq_buffer[], int index, int mq_length,
 			return (write(1, &mq_buffer[3], i - 3) + write(1,
 						&mq_buffer[index], mq_length));
 		}
-		else if (!(mq_flags & F_MINUS) && mq_padd == '0')
+		else if (!(mq_flags & MINUS_FL) && mq_padd == '0')
 		{
 			if (mq_extra_c)
 				mq_buffer[--padd_start] = mq_extra_c;
