@@ -24,8 +24,8 @@
  */
 struct fmt
 {
-	char fmt;
-	int (*fn)(va_list, char[], int, int, int, int);
+	char mq_fmt;
+	int (*mq_fn)(va_list, char[], int, int, int, int);
 };
 
 /**
@@ -33,7 +33,7 @@ struct fmt
  * @fmt: format
  * @fn_t: format function
  */
-typedef struct fmt fmt_t;
+typedef struct mq_fmt mq_fmt_t;
 
 int _printf(const char*, ...);
 int mq_handle_print(const char*, int*, va_list, char[], int, int, int, int);
