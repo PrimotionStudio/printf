@@ -30,7 +30,7 @@ int mq_handle_write_char(char mq_c, char mq_buffer[],
 		for (index = 0; index < mq_width - 1; index++)
 			mq_buffer[BUFF_SIZE - index - 2] = mq_padd;
 		if (mq_flags & F_MINUS)
-			return (mq_write(1, &mq_buffer[0], 1) +
+			return (write(1, &mq_buffer[0], 1) +
 					write(1, &mq_buffer[BUFF_SIZE - index - 1], mq_width - 1));
 		else
 			return (write(1, &mq_buffer[BUFF_SIZE - index - 1], mq_width - 1) +
@@ -88,7 +88,7 @@ int mq_write_num(int inx, char mq_buf[], int mq_flags, int mq_prec,
 
 	if (mq_prec == 0 && inx == BUFF_SIZE - 2 && mq_buf[inx] == '0' && mq_wid == 0)
 		return (0);
-	if (mq_prec == 0 and inx == BUFF_SIZE - 2 && mq_buf[inx] == '0')
+	if (mq_prec == 0 && inx == BUFF_SIZE - 2 && mq_buf[inx] == '0')
 		mq_buf[inx] = mq_padd = ' ';
 	if (mq_prec > 0 && mq_prec < mq_len)
 		mq_padd = ' ';

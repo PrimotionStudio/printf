@@ -13,8 +13,8 @@
 int mq_print_pointer(va_list mq_types, char mq_buffer[],
 		int mq_flags, int mq_width, int mq_precision, int mq_size)
 {
-	char extra_c = 0, padd = ' ';
-	int index = BUFF_SIZE - 2, length = 2, padd_start = 1;
+	char ext = 0, mq_padd = ' ';
+	int index = BUFF_SIZE - 2, len = 2, pad_start = 1;
 	unsigned long mq_num_addrs;
 	char mq_map_to[] = "0123456789abcdef";
 	void *mq_addrs = va_arg(mq_types, void *);
@@ -34,20 +34,20 @@ int mq_print_pointer(va_list mq_types, char mq_buffer[],
 	{
 		mq_buffer[index--] = mq_map_to[mq_num_addrs % 16];
 		mq_num_addrs /= 16;
-		length++;
+		len++;
 	}
 
 	if ((mq_flags & F_ZERO) && !(mq_flags & F_MINUS))
-		padd = '0';
+		mq_padd = '0';
 	if (mq_flags & F_PLUS)
-		extra_c = '+', length++;
+		ext = '+', len++;
 	else if (mq_flags & F_SPACE)
-		extra_c = ' ', length++;
+		ext = ' ', len++;
 
 	index++;
 
-	return (mq_write_pointer(0, index, mq_buffer,
-				mq_flags, mq_width, mq_precision, mq_size));
+	return (mq_write_pointer(mq_buffer, index, len, mq_width,
+				mq_flags, mq_padd, ext, pad_start));
 }
 
 /**
@@ -63,7 +63,7 @@ int mq_print_pointer(va_list mq_types, char mq_buffer[],
 int mq_print_non_printable(va_list mq_types, char mq_buffer[],
 		int mq_flags, int mq_width, int mq_precision, int mq_size)
 {
-	int i = 0, offset = 0;
+	int m = 0, offset = 0;
 	char *mq_string = va_arg(mq_types, char *);
 
 	UNUSED(mq_flags);
@@ -76,17 +76,17 @@ int mq_print_non_printable(va_list mq_types, char mq_buffer[],
 
 	while (mq_string[i] != '\0')
 	{
-		if (mq_is_printable(mq_string[i]))
-			mq_buffer[i + offset] = mq_string[i];
+		if (mq_is_printable(mq_string[m]))
+			mq_buffer[m + offset] = mq_string[m];
 		else
-			offset += append_hexa_code(mq_string[i], mq_buffer, i + offset);
+			offset += append_hexa_code(mq_string[m], mq_buffer, m + offset);
 
 		i++;
 	}
 
-	mq_buffer[i + offset] = '\0';
+	mq_buffer[m + offset] = '\0';
 
-	return (write(1, mq_buffer, i + offset));
+	return (write(1, mq_buffer, m + offset));
 }
 
 /**

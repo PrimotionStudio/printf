@@ -21,7 +21,7 @@ int mq_get_precision(const char *mq_format, int *mq_i, va_list mq_list)
 
 	for (curr_i += 1; mq_format[curr_i] != '\0'; curr_i++)
 	{
-		if (is_digit(mq_format[curr_i]))
+		if (mq_is_digit(mq_format[curr_i]))
 		{
 			mq_precision *= 10;
 			mq_precision += mq_format[curr_i] - '0';
