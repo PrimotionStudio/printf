@@ -103,6 +103,7 @@ int mq_print_reverse(va_list mq_types, char mq_buffer[],
 		int mq_flags, int mq_width, int mq_precision, int mq_size)
 {
 	char *mq_string;
+	char mq_character;
 	int i, mq_count = 0;
 
 	UNUSED(mq_buffer);
@@ -122,7 +123,7 @@ int mq_print_reverse(va_list mq_types, char mq_buffer[],
 
 	for (i = i - 1; i >= 0; i--)
 	{
-		char mq_character = mq_string[i];
+		mq_character = mq_string[i];
 
 		write(1, &mq_character, 1);
 		mq_count++;
