@@ -19,7 +19,7 @@ int mq_get_precision(const char *mq_format, int *m, va_list mq_list)
 
 	mq_precision = 0;
 
-	for (curent_point += 1; mq_format[curr_i] != '\0'; curr_i++)
+	for (curent_point += 1; mq_format[curent_point] != '\0'; curent_point++)
 	{
 		if (mq_is_digit(mq_format[curent_point]))
 		{
