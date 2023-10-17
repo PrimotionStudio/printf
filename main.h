@@ -76,7 +76,7 @@ int mq_append_hexa_code(char, char[], int);
 int mq_is_digit(char);
 
 long int mq_convert_size_number(long int, int);
-unsigned long int mq_convert_size_unsign(unsigned long int, int);
+long int mq_convert_size_unsign(unsigned long int, int);
 
 #endif
 

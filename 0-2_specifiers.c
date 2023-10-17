@@ -16,8 +16,8 @@ int mq_print_char(va_list mq_types, char mq_buffer[],
 {
 	char c = va_arg(mq_types, int);
 
-	return (handle_write_char(c, mq_buffer,
-				mq_flags, mq_width, mq_precision, mq_size));
+	return (mq_handle_write_char(c, mq_buffer,
+			mq_flags, mq_width, mq_precision, mq_size));
 }
 
 /**
